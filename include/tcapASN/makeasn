@@ -1,0 +1,15 @@
+include ../include/tcapASN/Makefile.am.libasncodec
+
+SRC := $(addprefix ../include/tcapASN/, $(ASN_MODULE_SRCS))
+OBJ := $(notdir $(patsubst %.c, %.o, $(SRC)))
+
+VPATH := $(dir $(SRC))
+
+all: $(OBJ)
+	ar cr libasn.a $^
+	rm *.o
+%.o: %.c
+	gcc -c $(ASN_MODULE_CFLAGS) $<
+clean:
+	rm *.o
+	libasn.a
