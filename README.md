@@ -7,7 +7,7 @@
 3. cmake ..
 4. make -j
 ## Using
-You need file with row TCAP. If you have hex dump of it you can use hexLoader:
+You need file with raw TCAP. If you have hex sequence of it you can use hexLoader:
 ```
 ./hexLoader
 ```
