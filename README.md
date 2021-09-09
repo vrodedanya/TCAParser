@@ -15,5 +15,5 @@ After getting dump of TCAP you can execute TCAParser:
 ```
 ./TCAParser <fileName>
 ```
-If TCAP is correct you will get xml in output<br>
-TCAParser doesn't parse some tags now (for example 'parameter')
+If TCAP is correct you will get xml in output.<br>
+TCAParser doesn't parse some tags in current version (for example 'parameter')
