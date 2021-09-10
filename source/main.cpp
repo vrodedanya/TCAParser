@@ -12,8 +12,14 @@ int main(int argc, char* argv[])
 	}
 	MessageType_t* message = NULL;
 	FILE* f = fopen(argv[1], "rb");
+	if (f == NULL)
+	{
+		std::cerr << "Failed to open " << argv[1] << " file!" << std::endl;
+		return EXIT_FAILURE;
+	}
 	char buffer[1024];
 	std::size_t size = std::fread(buffer, 1, 1024, f);
+	fclose(f);
 	auto res = ber_decode(0, &asn_DEF_MessageType, reinterpret_cast<void**>(&message), buffer, size);
 	if (res.code != RC_OK)
 	{

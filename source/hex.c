@@ -6,6 +6,11 @@ int main()
 	printf("Enter file name: ");
 	scanf("%s", fileName);
 	FILE* f = fopen(fileName, "wb");
+	if (f == NULL)
+	{
+		fprintf(stderr, "Failed to open %s file!", fileName);
+		return 1;
+	}
 	printf("Enter size of sequence: ");
 	size_t size;
 	scanf("%ld", &size);
