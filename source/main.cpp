@@ -2,24 +2,49 @@
 #include "tcapASN/MessageType.h"
 #include <cstring>
 
+int helpMessage()
+{
+	std::cerr << "Format:\n"
+					 "TCAParser -f <file_name>\n"
+					 "TCAParser" << std::endl;
+	return EXIT_FAILURE;
+}
+
 int main(int argc, char* argv[])
 {
-	if (argc != 2)
+	if (argc == 2 && std::strcmp(argv[1], "--help") == 0)
 	{
-		std::cerr << "Format:\n"
-					 "./TCAParser <file_name>" << std::endl;
-		return EXIT_FAILURE;
-	}
-	MessageType_t* message = NULL;
-	FILE* f = fopen(argv[1], "rb");
-	if (f == NULL)
-	{
-		std::cerr << "Failed to open " << argv[1] << " file!" << std::endl;
-		return EXIT_FAILURE;
+		return helpMessage();
 	}
 	char buffer[1024];
-	std::size_t size = std::fread(buffer, 1, 1024, f);
-	fclose(f);
+	std::size_t size;
+	if (argc == 3)
+	{
+		FILE* f = fopen(argv[2], "rb");
+		if (f == NULL)
+		{
+			std::cerr << "Failed to open " << argv[2] << " file!" << std::endl;
+			return EXIT_FAILURE;
+		}
+		size = std::fread(buffer, 1, 1024, f);
+		fclose(f);
+	}
+	else if (argc == 1)
+	{
+		std::size_t n = 0;
+		std::cout << "Enter size of sequence: ";
+		std::cin >> n;
+		std::cout << "Enter sequence: ";
+		for (std::size_t i = 0 ; i < n ; i++)
+		{
+			std::scanf("%hhx", &buffer[i]);
+		}
+	}
+	else
+	{
+		return helpMessage();
+	}
+	MessageType_t* message = NULL;
 	auto res = ber_decode(0, &asn_DEF_MessageType, reinterpret_cast<void**>(&message), buffer, size);
 	if (res.code != RC_OK)
 	{
