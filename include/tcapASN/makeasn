@@ -9,7 +9,7 @@ all: $(OBJ)
 	ar cr libasn.a $^
 	rm *.o
 %.o: %.c
-	gcc -c $(ASN_MODULE_CFLAGS) $<
+	gcc -c -I../include/tcapASN/skeletons $< $(ASN_MODULE_CFLAGS)
 clean:
 	rm *.o
 	libasn.a
