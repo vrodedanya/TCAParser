@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.7)
 project(TCAParser)
 
 include_directories(include include/tcapASN)
-link_directories(build)
+link_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 add_custom_target(buildASN make -f "${CMAKE_CURRENT_SOURCE_DIR}/include/tcapASN/makeasn" all)
 
